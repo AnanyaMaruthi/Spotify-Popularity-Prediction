@@ -70,7 +70,7 @@ hexbinplot(res ~ train$popularity, xlab="Popularity", ylab="Residuals",
   Logistic Model
   Does not significantly increase accuracy. Within error ranges of 2 percent
 "
-model4 <- lm(popularity ~  duration_ms + (acousticness * energy) +
+model4 <- glm(popularity ~  duration_ms + (acousticness * energy) +
                (liveness * speechiness) + (danceability * valence), data=train)
 summary(model4)
 
