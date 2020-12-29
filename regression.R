@@ -36,8 +36,8 @@ hexbinplot(res ~ train$popularity, xlab="Popularity", ylab="Residuals",
   Regression Model - 2
   Since acousticness and Energy might have a relationship
 "
-model2 <- lm(popularity ~ acousticness + danceability + duration_ms + energy + 
-               liveness + speechiness + tempo + valence + (acousticness * energy), data=train)
+model2 <- lm(popularity ~ danceability + duration_ms + liveness + speechiness + 
+               tempo + valence + (acousticness * energy), data=train)
 summary(model2)
 
 y = predict(model2, test)
@@ -51,11 +51,9 @@ hexbinplot(res ~ train$popularity, xlab="Popularity", ylab="Residuals",
 
 "
   Regression Model - 3
-  Since liveness & speechiness might have a relation and danceability & valence     
-  Pr(>|t|)for tempo was greater than 0.551. Hence removed tempo
+  Since liveness & speechiness might have a relation and danceability & valence
 "
-model3 <- lm(popularity ~ acousticness + danceability + duration_ms + energy + 
-               liveness + speechiness + valence + (acousticness * energy) + 
+model3 <- lm(popularity ~ duration_ms + (acousticness * energy) + tempo +
                (liveness * speechiness) + (danceability * valence), data=train)
 summary(model3)
 
@@ -72,8 +70,7 @@ hexbinplot(res ~ train$popularity, xlab="Popularity", ylab="Residuals",
   Logistic Model
   Does not significantly increase accuracy. Within error ranges of 2 percent
 "
-model4 <- lm(popularity ~ acousticness + danceability + duration_ms + energy + 
-               liveness + speechiness + valence + (acousticness * energy) + 
+model4 <- lm(popularity ~  duration_ms + (acousticness * energy) +
                (liveness * speechiness) + (danceability * valence), data=train)
 summary(model4)
 

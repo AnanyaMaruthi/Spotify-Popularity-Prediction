@@ -1,21 +1,28 @@
 library(ggplot2)
 require(gridExtra)
 
-# DATA PREPARATION
+"
+  DATA PREPARATION
+"
 data <- read.csv("./data/spotify.csv", header=TRUE)
 names(data)[1] <- 'genre'
 summary(data)
-# Removing ID and Name Attributes
-required_fields <- c('genre', 'artist_name', 'popularity', 'acousticness', 'danceability', 'duration_ms', 'energy', 'instrumentalness', 'key', 'liveness', 'loudness', 'mode', 'speechiness', 'tempo', 'valence')
+"
+  Removing ID and Name Attributes
+"
+required_fields <- c('genre', 'artist_name', 'popularity', 'acousticness', 'danceability', 'duration_ms', 'energy', 'instrumentalness', 'liveness', 'loudness', 'speechiness', 'tempo', 'valence')
 data <- subset(data, select=required_fields)
 summary(data)
-# Any null values present
+"
+  Any null values present
+"
 any(is.na(data))
 
 
-# Removing Irrelevant Columns
+"
+  Removing Irrelevant Columns
+"
 summary(data$instrumentalness)
-summary(log(data$instrumentalness))
 
 instrumentalness_histogram <- ggplot(data, aes(x=data$instrumentalness)) + 
   geom_histogram(aes(y=..density..), color="black", fill="white", bins=100) +
@@ -28,11 +35,13 @@ instrumentalness_log_histogram <- ggplot(data, aes(x=log10(data$instrumentalness
 instrumentalness_histogram
 instrumentalness_log_histogram
 
-required_fields <- c('genre', 'artist_name', 'popularity', 'acousticness', 'danceability', 'duration_ms', 'energy', 'key', 'liveness', 'loudness', 'mode', 'speechiness', 'tempo', 'valence')
+required_fields <- c('genre', 'artist_name', 'popularity', 'acousticness', 'danceability', 'duration_ms', 'energy', 'liveness', 'loudness', 'speechiness', 'tempo', 'valence')
 data <- subset(data, select=required_fields)
 
 
-# Removing outliers
+"
+  Removing Outliers
+"
 summary(data$duration_ms)
 summary(log(data$duration_ms))
 
@@ -66,19 +75,17 @@ data <- data[data$duration_ms >= duration_ms_min, ]
 summary(data$duration_ms)
 summary(log(data$duration_ms))
 
-duration_ms_histogram <- ggplot(data, aes(x=duration_ms)) + 
+duration_ms_histogram <- ggplot(data, aes(x=duration_ms / 1000)) + 
   geom_histogram(aes(y=..density..), color="black", fill="white", bins=30) +
   geom_density(alpha=0.2, fill="darkblue")
 
-duration_ms_log_histogram <- ggplot(data, aes(x=log10(duration_ms))) + 
+duration_ms_log_histogram <- ggplot(data, aes(x=log10(duration_ms / 1000))) + 
   geom_histogram(aes(y=..density..), color="black", fill="white", bins=20) +
   geom_density(alpha=0.2, fill="darkblue")
 
 duration_ms_histogram
 duration_ms_log_histogram
 
-boxplot(data$duration_ms, names=c("Duration_ms"), col=c("darkblue"))
-boxplot(log10(data$duration_ms), names=c("Duration_ms"), col=c("darkblue"))
-
+boxplot(data$duration_ms / 1000, names=c("Durations"), col=c("darkblue"))
 
 write.csv(data, './data/spotify-cleaned.csv', row.names = FALSE)

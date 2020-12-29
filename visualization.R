@@ -18,13 +18,13 @@ danceability_histogram <- ggplot(data, aes(x=danceability)) +
 
 # danceability_histogram
 
-duration_histogram <- ggplot(data, aes(x=duration_ms)) + 
+duration_histogram <- ggplot(data, aes(x=duration_ms / 1000)) + 
   geom_histogram(aes(y=..density..), color="black", fill="white", bins=40) +
   geom_density(alpha=0.2, fill="chocolate")
 
 # duration_histogram
 
-duration_log_histogram <- ggplot(data, aes(x=log10(duration_ms))) + 
+duration_log_histogram <- ggplot(data, aes(x=log10(duration_ms / 1000))) + 
   geom_histogram(aes(y=..density..), color="black", fill="white", bins=40) +
   geom_density(alpha=0.2, fill="chocolate")
 

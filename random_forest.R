@@ -17,7 +17,8 @@ train <- data[1 : bound, ]
 test <- data[(bound + 1): nrow(data), ] 
 summary(data)
 
-model1 <- randomForest(popularity ~ acousticness + danceability + duration_ms + energy + speechiness + valence, data = train)
+model1 <- randomForest(popularity ~ acousticness + danceability + duration_ms + 
+                         energy + speechiness + valence, data = train)
 model1
 
 "
