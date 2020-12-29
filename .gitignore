@@ -1,2 +1,4 @@
-.RData
-.Rhistory
+.R*
+*.Rproj*
+data/spotify-cleaned.csv
+data/spotify-filtered.csv
